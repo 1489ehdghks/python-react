@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import ModalPost from '../modal/ModalPost';
 import { useAuth } from '../Auth/AuthContext';
+import PostPageSection from './Section/PostPageSection';
 import './PostPage.scss';
 
 function PostPage() {
@@ -14,6 +15,7 @@ function PostPage() {
 
         if (!currentUser) {
             alert("Please log in to create a post.");
+            console.log("currentUser:", currentUser)
             return;
         }
         const postData = {
@@ -53,22 +55,25 @@ function PostPage() {
 
 
     return (
-        <main>
-            <div id="gallery">
-                <button
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    onClick={() => setVisible(true)}
-                >
-                    Add Post
-                </button>
-                <ModalPost
-                    visible={visible}
-                    onCreate={onCreate}
-                    onCancel={() => setVisible(false)}
-                />
-            </div>
-        </main>
+        <div>
+
+            <button
+                className='postpagebutton'
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setVisible(true)}
+            >
+                추억 만들기
+            </button>
+            <ModalPost
+                visible={visible}
+                onCreate={onCreate}
+                onCancel={() => setVisible(false)}
+            />
+
+            <PostPageSection />
+        </div>
+
     );
 }
 

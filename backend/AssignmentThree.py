@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True, origins=['http://localhost:3000'])
-login_manager = LoginManager(app)
+login_manager = LoginManager()
 login_manager.init_app(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -16,9 +16,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
     os.path.join(basedir, "database.db")
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = os.urandom(24)
+
+
 # DB
-
-
 class Member(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(12), nullable=False)
@@ -27,6 +27,12 @@ class Member(db.Model, UserMixin):
 
     def display(self):
         print(f"Username: {self.username}")
+
+    def get_userID(self):
+        return self.userID
+
+    def __repr__(self):
+        return f"USER: {self.userID} = {self.username}"
 
 
 class Post(db.Model):
@@ -37,8 +43,15 @@ class Post(db.Model):
         'member.username'), nullable=False)
 
 
-# 라우트
+# 로그인 관련
+@login_manager.user_loader
+def load_user(user_id):
+    user = Member.query.get(int(user_id))
+    print("load_user:", user)
+    return user
 
+
+# 라우트
 # 회원가입
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -68,11 +81,12 @@ def register():
 # 포스트생성
 @app.route('/api/posts', methods=['POST'])
 @cross_origin(supports_credentials=True, origins=['http://localhost:3000'])
-@login_required
+# @login_required
 def create_post():
     try:
+        print("current_user:", current_user.username)
         if not current_user.is_authenticated:
-            print("current_user:", current_user)
+            print("current_user1111111:", current_user)
             return jsonify({"error": "로그인이 필요합니다."}), 401
 
         try:
@@ -89,19 +103,26 @@ def create_post():
 
             return jsonify({"message": "Post created successfully"}), 201
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            return jsonify({"error222222222": str(e)}), 500
     except Exception as e:
-        return jsonify({'error': '서버 내부 오류'}), 500
+        return jsonify({'error1111111111': '11111111'}), 500
 
-# 로그인 관련
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    print("load_user:", load_user(user_id))
-    return Member.query.get(int(user_id))
+# 포스트 조회
 
 
+@app.route('/api/posts', methods=['GET'])
+@cross_origin(supports_credentials=True, origins=['http://localhost:3000'])
+def get_posts():
+    try:
+        posts = Post.query.all()  # 모든 포스트 조회
+        posts_data = [{'id': post.id, 'title': post.title,
+                       'content': post.content, 'author': post.author} for post in posts]
+        return jsonify(posts_data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# 로그인
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
