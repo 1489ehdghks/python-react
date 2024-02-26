@@ -44,7 +44,6 @@ function SignupModal({ open, handleClose }) {
                 // 폼 제출 성공 후 추가 작업 (예: 모달 닫기, 알림 표시 등)
                 handleClose();
             } else {
-                // 서버 에러 처리
                 console.error('Server error:', response);
             }
         } catch (error) {

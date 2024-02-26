@@ -1,11 +1,13 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__)
+CORS(app, supports_credentials=True, origins=['http://localhost:3000'])
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 
@@ -14,10 +16,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
     os.path.join(basedir, "database.db")
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = os.urandom(24)
-CORS(app, supports_credentials=True)
-
-
 # DB
+
+
 class Member(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(12), nullable=False)
@@ -34,10 +35,6 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     author = db.Column(db.String(12), db.ForeignKey(
         'member.username'), nullable=False)
-
-
-def load_user(user_id):
-    return Member.query.get(int(user_id))
 
 
 # 라우트
@@ -70,30 +67,38 @@ def register():
 
 # 포스트생성
 @app.route('/api/posts', methods=['POST'])
+@cross_origin(supports_credentials=True, origins=['http://localhost:3000'])
 @login_required
 def create_post():
-    if not current_user.is_authenticated:
-        return jsonify({"error": "로그인이 필요합니다."}), 401
-
     try:
-        data = request.get_json()
+        if not current_user.is_authenticated:
+            print("current_user:", current_user)
+            return jsonify({"error": "로그인이 필요합니다."}), 401
 
-        new_post = Post(
-            title=data['title'],
-            content=data['content'],
-            author=current_user.username
-        )
-        db.session.add(new_post)
-        db.session.commit()
+        try:
+            print("2222222")
+            data = request.get_json()
 
-        return jsonify({"message": "Post created successfully"}), 201
+            new_post = Post(
+                title=data['title'],
+                content=data['content'],
+                author=current_user.username
+            )
+            db.session.add(new_post)
+            db.session.commit()
+
+            return jsonify({"message": "Post created successfully"}), 201
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+        return jsonify({'error': '서버 내부 오류'}), 500
 
 # 로그인 관련
+
+
 @login_manager.user_loader
 def load_user(user_id):
+    print("load_user:", load_user(user_id))
     return Member.query.get(int(user_id))
 
 
@@ -109,7 +114,9 @@ def login():
     # 사용자가 존재하고 비밀번호가 일치하는 경우
     if user and check_password_hash(user.userPassword, password):
         login_user(user)
+        print("user:", user)
         return jsonify({"message": "Login successful", "user": {"userID": user.userID}}), 200
+
     else:
         return jsonify({"message": "Invalid userID or password"}), 401
 

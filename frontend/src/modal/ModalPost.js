@@ -1,4 +1,3 @@
-// ModalPost.js
 import React, { useState } from 'react';
 import { Modal, Button, Input, Form } from 'antd';
 

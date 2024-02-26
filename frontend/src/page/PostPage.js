@@ -9,20 +9,27 @@ function PostPage() {
     const { currentUser } = useAuth();
 
     const onCreate = async (values) => {
-        console.log("currentUser11", currentUser)
+        console.log("currentUser:", currentUser);
+        console.log("values", values);
+
         if (!currentUser) {
             alert("Please log in to create a post.");
             return;
         }
+        const postData = {
+            ...values,
+            author: currentUser.user.userID
+        };
 
         try {
+            console.log("postData:", postData)
             const response = await fetch('http://localhost:5000/api/posts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify({ ...values, author: currentUser.user.userID })
+                body: JSON.stringify(postData)
             });
 
             if (!response.ok) {
@@ -31,6 +38,7 @@ function PostPage() {
                 alert(`Failed to create post: ${errorResponse.error}`);
                 return;
             }
+
 
             const result = await response.json();
             console.log("Post created successfully", result);
@@ -41,6 +49,7 @@ function PostPage() {
             alert("Error creating post.");
         }
     };
+
 
 
     return (

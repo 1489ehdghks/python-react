@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Modal, Box, TextField, Button, Typography } from '@mui/material';
 import { useAuth } from '../Auth/AuthContext';
 
-// 모달 스타일
 const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -39,13 +38,16 @@ function LoginModal({ open, handleClose }) {
             const response = await fetch('http://localhost:5000/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(loginInfo)
             });
 
             if (!response.ok) {
-                throw new Error('Login failed');
+                const errorData = await response.json();
+                setError(errorData.message || 'Login failed. Please check your userID and password.');
+                return;
             }
 
             const data = await response.json();
@@ -65,36 +67,10 @@ function LoginModal({ open, handleClose }) {
             aria-describedby="login-modal-description"
         >
             <Box sx={modalStyle} component="form" onSubmit={handleSubmit}>
-                <Typography id="login-modal-title" variant="h6" component="h2">
-                    Login
-                </Typography>
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="userID"
-                    label="User ID"
-                    name="userID"
-                    autoComplete="userID"
-                    autoFocus
-                    onChange={handleChange}
-                    value={loginInfo.userID}
-                />
-                <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={handleChange}
-                    value={loginInfo.password}
-                />
-                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                    Login
-                </Button>
+                <Typography id="login-modal-title" variant="h6" component="h2">Login</Typography>
+                <TextField margin="normal" required fullWidth id="userID" label="User ID" name="userID" autoComplete="userID" autoFocus onChange={handleChange} value={loginInfo.userID} />
+                <TextField margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" onChange={handleChange} value={loginInfo.password} />
+                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Login</Button>
                 {error && <Typography color="error">{error}</Typography>}
             </Box>
         </Modal>
