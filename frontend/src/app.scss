@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap");
+
+:root {
+    --theme-bg-color-dark: rgba(18, 18, 29, 0.95);
+    --theme-bg-color-light: rgb(255, 255, 255);
+    --border-color: rgba(113, 119, 144, 0.25);
+    --primary-color: #ff8177;
+    --secondary-color: #ffd185;
+    --tertiary-color: #8fe3a1;
+    --quaternary-color: #6dd3ce;
+    --quinary-color: #8ea7ff;
+    --text-dark: #1c1c1e;
+    --text-light: #ffffff;
+
+    // 1. 은은하게 하늘색과 보라색을 조합을 보여주는 색상
+    --sky-purple-1: #c6cde9;
+    --sky-purple-2: #9baef3;
+    --sky-purple-3: #b8a7ea;
+    --sky-purple-4: #b387d6;
+    --sky-purple-5: #af65b9;
+
+    // 2. 순서대로 섞으면 좋은 색상들 (2-1)
+    --mix-colors-1-1: #7bdff2;
+    --mix-colors-1-2: #b2f7ef;
+    --mix-colors-1-3: #eff7f6;
+    --mix-colors-1-4: #f7d6e0;
+    --mix-colors-1-5: #f2b5d4;
+
+    // 2. 순서대로 섞으면 좋은 색상들 (2-2)
+    --mix-colors-2-1: #ffcfc5;
+    --mix-colors-2-2: #ffffff;
+    --mix-colors-2-3: #c9eaef;
+    --mix-colors-2-4: #ffdbe7;
+    --mix-colors-2-5: #ffeed1;
+
+    // 3. 폰트
+}
+button {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--secondary-color);
+    }
+}

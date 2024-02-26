@@ -1,0 +1,55 @@
+.top-menu {
+    nav {
+        width: 100%;
+        ul.menu-list {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 5;
+            padding: 5 20px;
+            li {
+                &:not(:last-child) {
+                    margin-right: 40px; // 아이콘 사이의 간격 조정
+                }
+
+                .icon-link {
+                    display: flex;
+                    align-items: center;
+                    color: white;
+                    text-decoration: none;
+                    .icon {
+                        font-size: 34px;
+                        transition: transform 0.5s ease;
+                        &:hover {
+                            animation: shake 1s ease-in-out;
+                        }
+                    }
+                }
+            }
+            .logout-icon {
+                margin-left: auto;
+                margin-right: 40px;
+            }
+        }
+    }
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: rotate(-10deg);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: rotate(10deg);
+    }
+}

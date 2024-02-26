@@ -1,0 +1,23 @@
+// TopMenu 스타일
+.top-menu {
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; // 다른 요소들 위에 덮기 위해 높은 값 설정
+}
+
+// Footer 스타일
+.footer {
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; // 다른 요소들 위에 덮기 위해 높은 값 설정
+}
