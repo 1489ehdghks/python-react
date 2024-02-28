@@ -59,8 +59,6 @@ function PostPage() {
 
             <button
                 className='postpagebutton'
-                type="primary"
-                icon={<PlusOutlined />}
                 onClick={() => setVisible(true)}
             >
                 추억 만들기

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { HomeOutlined, ArrowRightOutlined, CoffeeOutlined } from '@ant-design/icons';
+import { HomeOutlined, RollbackOutlined, CommentOutlined, TableOutlined } from '@ant-design/icons';
 import { useAuth } from '../Auth/AuthContext';
+import Chatbot from '../Form/ChatForm';
 import './TopMenu.scss'
 
-const TopMenu = () => {
+const TopMenu = ({ toggleChatbot }) => {
     const { currentUser, logout } = useAuth();
+    const [showChatbot, setShowChatbot] = useState(false);
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -16,32 +18,44 @@ const TopMenu = () => {
         }
     };
 
+    const handleChatbotToggle = () => {
+        setShowChatbot(!showChatbot);
+    };
+
     return (
-        <header className="top-menu">
-            <nav>
-                <ul className="menu-list">
-                    <li>
-                        <Link to="/" className="icon-link">
-                            <HomeOutlined className="icon" />
-                        </Link>
-                    </li>
-                    {currentUser && (
-                        <>
-                            <li>
-                                <Link to="/game" className="icon-link">
-                                    <CoffeeOutlined className="icon" />
-                                </Link>
-                            </li>
-                            <li className="logout-icon">
-                                <Link onClick={handleLogout} className="icon-link">
-                                    <ArrowRightOutlined className="icon" />
-                                </Link>
-                            </li>
-                        </>
-                    )}
-                </ul>
-            </nav>
-        </header>
+        <div>
+            <header className="top-menu">
+                <nav>
+                    <ul className="menu-list">
+                        <li>
+                            <Link to="/" className="icon-link">
+                                <HomeOutlined className="icon" />
+                            </Link>
+                        </li>
+                        {currentUser && (
+                            <>
+                                <li>
+                                    <Link onClick={handleChatbotToggle} className="icon-link">
+                                        <CommentOutlined className="icon" />
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/gameHistory" className="icon-link">
+                                        <TableOutlined className="icon" />
+                                    </Link>
+                                </li>
+                                <li className="logout-icon">
+                                    <Link onClick={handleLogout} className="icon-link">
+                                        <RollbackOutlined className="icon" />
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </nav>
+            </header>
+            {showChatbot && <Chatbot showChatbot={showChatbot} setShowChatbot={setShowChatbot} />}
+        </div>
     );
 };
 export default TopMenu; 

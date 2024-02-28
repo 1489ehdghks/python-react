@@ -41,7 +41,6 @@ function SignupModal({ open, handleClose }) {
             if (response.ok) {
                 const result = await response.json();
                 console.log(result.message);
-                // 폼 제출 성공 후 추가 작업 (예: 모달 닫기, 알림 표시 등)
                 handleClose();
             } else {
                 console.error('Server error:', response);

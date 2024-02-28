@@ -31,6 +31,7 @@ const PostPageSection = () => {
 
     useEffect(() => {
         prevPageRef.current = currentPage;
+        console.log()
 
 
         const leftPage = document.querySelector('.left-page');

@@ -4,6 +4,7 @@ import { AuthProvider } from './Auth/AuthContext';
 import AppRoutes from './routes';
 
 function App() {
+
   return (
     <AuthProvider>
       <BrowserRouter>

@@ -7,29 +7,3 @@
     right: 10%;
     top: 10%;
 }
-main {
-    font-family: "Kalam", sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100vw;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-#gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    perspective: 0;
-
-    figure img {
-        aspect-ratio: 1 /1;
-        width: 100%;
-        object-fit: cover;
-        display: block;
-        border-radius: 5px;
-        z-index: 1;
-    }
-}

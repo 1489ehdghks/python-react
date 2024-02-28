@@ -1,0 +1,63 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#game-gallery {
+    display: flex;
+    flex-direction: column;
+
+    transition: transform 1s;
+    width: 80%;
+    height: 70vh;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    h1 {
+        transform: translateX(40%);
+    }
+    .game-history-table {
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    }
+
+    .emoji {
+        font-size: 1.5rem;
+    }
+}
+
+.pagination-container {
+    margin-top: 20px;
+    padding: 10px;
+
+    .ant-pagination {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        li {
+            margin: 0 5px;
+            a {
+                color: #1890ff; // Ant Design 기본 색상
+            }
+            &.ant-pagination-item-active {
+                font-weight: bold;
+            }
+        }
+    }
+}

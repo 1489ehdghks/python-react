@@ -35,6 +35,7 @@ const ModalPost = ({ visible, onCreate, onCancel }) => {
                 >
                     <Input />
                 </Form.Item>
+
                 <Form.Item
                     name="content"
                     label="Content"

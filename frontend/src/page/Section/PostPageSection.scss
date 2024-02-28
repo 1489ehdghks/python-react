@@ -11,7 +11,7 @@ body {
     scroll-behavior: smooth;
     position: relative;
     color: #222;
-    min-height: 90vh;
+
     overflow-x: hidden;
     background: linear-gradient(135deg, var(--mix-colors-2-1), var(--mix-colors-2-5), var(--mix-colors-2-2));
 }
@@ -22,8 +22,8 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
-    min-height: 90vh;
+    width: 100vw;
+    height: 100vh;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -41,6 +41,8 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateX(50%);
+    transform: translateY(20%);
     perspective: 1000px;
 
     figure {
@@ -56,7 +58,7 @@ main {
         box-shadow: 0 7px 8px rgba(0, 0, 0, 0.4);
         width: 100%;
 
-        height: auto;
+        height: 80%;
 
         background-position: center;
         background-blend-mode: multiply;
