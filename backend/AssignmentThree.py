@@ -2,18 +2,6 @@
 # dir((a)). 클래스 안의 메소드와 매직메소드를 전부 보여줌.
 
 
-import os
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
-
-
-app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
-    os.path.join(basedir, "database2.db")
-db = SQLAlchemy(app)
-
-
 class Member():
     def __init__(self, name, username, password):
         self.name = name
