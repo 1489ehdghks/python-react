@@ -15,10 +15,12 @@ const Chatbot = ({ showChatbot, setShowChatbot }) => {
             username: currentUser.user.userID
         }
         try {
+
             console.log("userChoice1111:", userChoice)
             console.log("userMessages:", userMessages)
             console.log("messageInput:", messageInput)
             console.log("postData:", postData)
+
 
 
             const response = await fetch("http://localhost:5000/game", {
